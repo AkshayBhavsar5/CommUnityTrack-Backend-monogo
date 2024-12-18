@@ -2,50 +2,57 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import { type } from "os";
 
-const userSchema = new mongoose.Schema({
-  userName: {
-    type: String,
-    required: [true, "Name Required!"],
-    unique: true,
-  },
-  firstName: {
-    type: String,
-    required: [true, "Name Required!"],
-  },
-  lastName: {
-    type: String,
-    required: [true, "Name Required!"],
-  },
-  email: {
-    type: String,
-    required: [true, "Email Required!"],
-    unique: true,
-  },
-  phone: {
-    type: String,
-    required: [true, "Phone Required!"],
-  },
-  password: {
-    type: String,
-    required: [true, "Password Required!"],
-    minLength: [8, "Password Must Contain At Least 8 Characters!"],
-    select: false,
-  },
-  image: {
-    public_id: {
+const userSchema = new mongoose.Schema(
+  {
+    userName: {
       type: String,
-      required: true,
+      required: [true, "Name Required!"],
+      unique: true,
     },
-    url: {
+    firstName: {
       type: String,
-      required: true,
+      required: [true, "Name Required!"],
     },
-  },
+    lastName: {
+      type: String,
+      required: [true, "Name Required!"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email Required!"],
+      unique: true,
+    },
+    phone: {
+      type: String,
+      required: [true, "Phone Required!"],
+    },
+    password: {
+      type: String,
+      required: [true, "Password Required!"],
+      minLength: [8, "Password Must Contain At Least 8 Characters!"],
+      select: false,
+    },
+    termsAndCondtion: {
+      type: Boolean,
+    },
+    image: {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+    },
 
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-});
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+  },
+  { timestamps: true }
+);
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {

@@ -26,7 +26,15 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   //   cloudinaryResponseForResume error
 
-  const { userName, firstName, lastName, email, phone, password } = req.body;
+  const {
+    userName,
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    termsAndCondtion,
+  } = req.body;
 
   // create or register user
   const CreateUser = await User.create({
@@ -36,6 +44,7 @@ export const register = catchAsyncError(async (req, res, next) => {
     email,
     phone,
     password,
+    termsAndCondtion,
     image: {
       public_id: cloudinaryResponseForImage.public_id,
       url: cloudinaryResponseForImage.secure_url,
@@ -52,9 +61,12 @@ export const register = catchAsyncError(async (req, res, next) => {
 
 // user Login
 export const login = catchAsyncError(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, termsAndCondtion } = req.body;
   if (!email || !password) {
     return next(new ErrorHandler("Provide Email And Password!", 400));
+  }
+  if (!termsAndCondtion) {
+    return next(new ErrorHandler("Please accept the term&con!", 400));
   }
   const user = await User.findOne({ email }).select("+password");
   if (!user) {

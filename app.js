@@ -6,7 +6,7 @@ import fileUpload from "express-fileupload";
 import dbConnection from "./Database/dbConntection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import userRouter from "./Router/userRoutes.js";
-import todoRouter from "./Router/todoRoutes.js";
+import taskRouter from "./Router/taskRoutes.js";
 
 const app = express();
 dotenv.config({ path: "./config/.env" });
@@ -33,6 +33,6 @@ dbConnection();
 app.use(errorMiddleware);
 
 app.use("/api/v1/user", userRouter);
-app.use("/api/v1/task", todoRouter);
+app.use("/api/v1/task", taskRouter);
 
 export default app;
