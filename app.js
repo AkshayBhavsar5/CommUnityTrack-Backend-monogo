@@ -11,9 +11,20 @@ import taskRouter from "./Router/taskRoutes.js";
 const app = express();
 dotenv.config({ path: "./config/.env" });
 
+// Configure CORS
 app.use(
   cors({
-    origin: [process.env.DASHBORAD_URL, process.env.DASHBORAD_URL],
+    origin: process.env.DASHBOARD_URL, // Replace with frontend URL
+    methods: ["GET", "POST", "DELETE", "PUT"], // Allowed methods
+    credentials: true, // Allow cookies and credentials
+  })
+);
+
+// Handle preflight requests
+app.options(
+  "*",
+  cors({
+    origin: process.env.DASHBOARD_URL,
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
