@@ -19,5 +19,9 @@ router.get("/me", isAuthenticated, getUser);
 router.get("/alluser", isAuthenticated, getAllUser);
 router.put("/update/me", isAuthenticated, updateuser);
 router.put("/update/password", isAuthenticated, updatePassword);
+// Verify token endpoint
+router.get("/verify-token", isAuthenticated, (req, res) => {
+  res.status(200).json({ message: "Token is valid", user: req.user });
+});
 
 export default router;
