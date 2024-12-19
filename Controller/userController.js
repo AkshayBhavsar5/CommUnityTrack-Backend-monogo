@@ -27,6 +27,7 @@ export const register = catchAsyncError(async (req, res, next) => {
   //   cloudinaryResponseForResume error
 
   const {
+    userType,
     userName,
     firstName,
     lastName,
@@ -38,6 +39,7 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   // create or register user
   const CreateUser = await User.create({
+    userType,
     userName,
     firstName,
     lastName,

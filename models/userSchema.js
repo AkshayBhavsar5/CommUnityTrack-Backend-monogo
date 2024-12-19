@@ -6,6 +6,12 @@ import { type } from "os";
 
 const userSchema = new mongoose.Schema(
   {
+    userType: {
+      type: String,
+      enum: ["admin", "member", "associate"],
+      default: "member",
+    },
+
     userName: {
       type: String,
       required: [true, "Name Required!"],
