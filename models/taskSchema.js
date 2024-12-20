@@ -35,7 +35,9 @@ const taskSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      require: [true, "status is Require."],
+      enum: ["backlog", "planning", "in_progress", "completed"],
+      default: "backlog",
+      // require: [true, "status is Require."],
     },
     status: {
       type: String,
@@ -47,7 +49,9 @@ const taskSchema = new mongoose.Schema(
     },
     prorities: {
       type: String,
-      require: [true, "prorities is Require."],
+      enum: ["normal", "high", "urgent"],
+      default: "normal",
+      // require: [true, "prorities is Require."],
     },
     tages: {
       type: Array,
