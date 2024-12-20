@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
@@ -11,7 +11,11 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "member", "associate"],
       default: "member",
     },
-
+    // organisationId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Organisation",
+    //   require: [true, "organisation ID is require"],
+    // },
     userName: {
       type: String,
       required: [true, "Name Required!"],
@@ -93,3 +97,6 @@ userSchema.methods.getResetPasswordToken = function () {
 };
 
 export const User = mongoose.model("User", userSchema);
+
+// or
+// id,name,decription

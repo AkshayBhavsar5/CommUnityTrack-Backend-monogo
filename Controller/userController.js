@@ -2,6 +2,7 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { User } from "../models/userSchema.js";
 import { v2 as cloudinary } from "cloudinary";
+import { Organisation } from "../models/organisationSchema.js";
 import jwt from "jsonwebtoken";
 
 export const register = catchAsyncError(async (req, res, next) => {
@@ -37,10 +38,14 @@ export const register = catchAsyncError(async (req, res, next) => {
     termsAndCondtion,
   } = req.body;
 
+  // const organisationId = req.Organisation
+  // console.log(req.Organisation);
+
   // create or register user
   const CreateUser = await User.create({
     userType,
     userName,
+    // organisationId,
     firstName,
     lastName,
     email,
