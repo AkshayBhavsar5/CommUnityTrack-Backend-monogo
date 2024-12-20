@@ -7,10 +7,12 @@ import dbConnection from "./Database/dbConntection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import userRouter from "./Router/userRoutes.js";
 import taskRouter from "./Router/taskRoutes.js";
+import organisaitonRouter from "./Router/organisationRoutes.js";
+import bodyParser from "body-parser";
 
 const app = express();
-dotenv.config({ path: "./config/.env" });
 
+dotenv.config({ path: "./config/.env" });
 // Configure CORS
 app.use(
   cors({
@@ -30,6 +32,7 @@ app.options(
   })
 );
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -45,5 +48,6 @@ app.use(errorMiddleware);
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/task", taskRouter);
+app.use("/api/v1/organisation", organisaitonRouter);
 
 export default app;

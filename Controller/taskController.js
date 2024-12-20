@@ -1,5 +1,5 @@
 import { Task } from "../models/taskSchema.js";
-import { getAllUser } from "./userController.js";
+import { User } from "../models/userSchema.js";
 
 export const createTasks = async (req, res, next) => {
   const {
@@ -12,7 +12,10 @@ export const createTasks = async (req, res, next) => {
     prorities,
     tages,
   } = req.body;
-  const userId = req.user?._id;
+  // const users = await User.find();
+  const userId = req.user._id;
+  // const assignedUsers = users.map((user) => user._id);
+
   if (
     !title ||
     !description ||
@@ -108,6 +111,21 @@ export const getTask = async (req, res, next) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+export const getMyTask = async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const task = await Task.find({ assignedUsers: userId }).populate(
+      "assignedUsers",
+      "userName"
+    );
+    res.status(200).json({ task });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching tasks", error: error.message });
   }
 };
 
